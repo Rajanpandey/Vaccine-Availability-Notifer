@@ -18,6 +18,7 @@ CREATE TABLE `notifybydistrict` (
   `d_id` int(11) NOT NULL,
   `district` int(4) NOT NULL,
   `email` varchar(30) NOT NULL,
+  `vaccine` varchar(20) NOT NULL,
   `date` varchar(12) NOT NULL,
   `mailSent` tinyint(1) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT current_timestamp()
@@ -32,6 +33,7 @@ CREATE TABLE `notifybydistrict` (
 CREATE TABLE `notifybypin` (
   `p_id` int(11) NOT NULL,
   `pincode` int(8) NOT NULL,
+  `email` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
   `date` varchar(12) NOT NULL,
   `mailSent` tinyint(1) NOT NULL,

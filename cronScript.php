@@ -19,7 +19,7 @@ foreach($notifybypin as $p_id) {
             $center_name = 'Center: '.$center->name.', Block: '.$center->name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
             $body .= '<br/><br/><b>'.$center_name.'</b><br/>';
             foreach($center->sessions as $session) {
-                if ($session->available_capacity > 0) {
+                if (($p_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $vaccineFound += $session->available_capacity;
                     $session_details = $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit;
                     $body .= $session_details.'<br/>';
@@ -50,7 +50,7 @@ foreach($notifybydistrict as $d_id) {
             $center_name = 'Center: '.$center->name.', Block: '.$center->name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
             $body .= '<br/><br/><b>'.$center_name.'</b><br/>';
             foreach($center->sessions as $session) {
-                if ($session->available_capacity > 0) {
+                if (($d_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $vaccineFound += $session->available_capacity;
                     $session_details = $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit;
                     $body .= $session_details.'<br/>';
