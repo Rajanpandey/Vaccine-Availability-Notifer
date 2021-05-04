@@ -59,7 +59,7 @@ foreach($notifybydistrict as $d_id) {
         }
         if ($vaccineFound) {
             sendMail($d_id['email'], "Vaccine is Available in your pincode", $body);
-            mysqli_query($conn, "UPDATE notifybydistrict SET mailSent=1 WHERE d_id=$id");
+            //mysqli_query($conn, "UPDATE notifybydistrict SET mailSent=1 WHERE d_id=$id");
         }
     }
 }
