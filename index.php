@@ -7,7 +7,7 @@ if(isset($_POST['notifyByPin'])) {
     $date = mysqli_real_escape_string($conn, trim($_POST['date']));
     $date = date_format(date_create($date),"d-m-Y");
 
-    $sql = "INSERT INTO notifybypin (pincode, email, date) VALUES ('$pincode', '$email', '$date')";
+    $sql = "INSERT INTO notifybypin (pincode, email, date, mailSent) VALUES ('$pincode', '$email', '$date', 0)";
 
     if(mysqli_query($conn, $sql)) {
         echo "<script type=\"text/javascript\"> alert('You are registered! We will notify you as the vaccine in your pincode becomes available!'); location.href = 'index.php'; </script>";
@@ -22,7 +22,7 @@ if(isset($_POST['notifyByDistrict'])) {
     $date = mysqli_real_escape_string($conn, trim($_POST['date']));
     $date = date_format(date_create($date),"d-m-Y");
 
-    $sql = "INSERT INTO notifybydistrict (district, email, date) VALUES ('$district', '$email', '$date')";
+    $sql = "INSERT INTO notifybydistrict (district, email, date, mailSent) VALUES ('$district', '$email', '$date', 0)";
 
     if(mysqli_query($conn, $sql)) {
         echo "<script type=\"text/javascript\"> alert('You are registered! We will notify you as the vaccine in your distict becomes available!'); location.href = 'index.php'; </script>";
@@ -44,14 +44,15 @@ mysqli_close($conn);
 <body>
     <div class="container">
         <div class="row pt-5">
-            <h2 class="pb-4 text-center">Welcome to Vaccine Availability Notifier</h2>
+            <h2 class="pb-4 text-center text-primary">Welcome to Vaccine Availability Notifier</h2>
             <div class="col-6">
-                <h5 class="text-center">How it works:</h5>
+                <h5 class="text-center text-success">How it works:</h5>
                 <p>1. Register your email to get notified about vaccine availability in your district or pin (or both!) for the whole week from the selected date.</p>
-                <p>2. For some reason if you couldn't book the slot, you can visit the site again and register yourself for another availability reminder.</p>
+                <p>2. For some reason if you couldn't book the slot, <b>you can visit the site again and register yourself for another availability reminder</b>.</p>
+                <p>3. Finding by pincode is the best for finding nearest center. Finding centers by District may contain far off locations.</p>
             </div>
             <div class="col-6">
-                <h5 class="text-center">Data disclaimer and privacy policy:</h5>
+                <h5 class="text-center text-danger">Data disclaimer and privacy policy:</h5>
                 <p>1. We do not sell your data in any way whatsoever.</p>
                 <p>2. The webapp is developed in a way to minimize the number of API calls to the government server.</p>
                 <p>3. Open source code can be found here: .</p>

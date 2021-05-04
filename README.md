@@ -4,7 +4,7 @@ A web app where people can register to get email notification whenever Covid-19 
 It uses Co-WIN API from API Setu to find the availability of the vaccine.
 
 # Website link
-I have hosted the site on Azure on my own subscription:
+I have hosted the site on Azure on my own subscription: https://vaccinenotifier.azurewebsites.net/
 
 # How it works
 A cron job is run twice a day, and if any vaccine is available for the pincode/district, then an email is sent to the requester.

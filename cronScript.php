@@ -57,9 +57,10 @@ foreach($notifybydistrict as $d_id) {
                 }
             }
         }
+        $body .= '<br/><br/><h2>For some reason if you could not book the slot, you can visit https://vaccinenotifier.azurewebsites.net/ to register yourself again for another avaialbility reminder. :)</h2>';
         if ($vaccineFound) {
             sendMail($d_id['email'], "Vaccine is Available in your pincode", $body);
-            //mysqli_query($conn, "UPDATE notifybydistrict SET mailSent=1 WHERE d_id=$id");
+            mysqli_query($conn, "UPDATE notifybydistrict SET mailSent=1 WHERE d_id=$id");
         }
     }
 }
