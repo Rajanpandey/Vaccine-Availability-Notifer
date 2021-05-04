@@ -4,11 +4,12 @@ require('connect.php');
 if(isset($_POST['notifyByPin'])) {
     $pincode = mysqli_real_escape_string($conn, trim($_POST['pincode']));
     $vaccine = mysqli_real_escape_string($conn, trim($_POST['vaccine']));
+    $age = mysqli_real_escape_string($conn, trim($_POST['age']));
     $email = mysqli_real_escape_string($conn, trim($_POST['email']));
     $date = mysqli_real_escape_string($conn, trim($_POST['date']));
     $date = date_format(date_create($date),"d-m-Y");
 
-    $sql = "INSERT INTO notifybypin (pincode, email, vaccine, date, mailSent) VALUES ('$pincode', '$email', '$vaccine', '$date', 0)";
+    $sql = "INSERT INTO notifybypin (pincode, email, vaccine, age, date, mailSent) VALUES ('$pincode', '$email', '$vaccine', '$age', '$date', 0)";
 
     if(mysqli_query($conn, $sql)) {
         echo "<script type=\"text/javascript\"> alert('You are registered! We will notify you as the vaccine in your pincode becomes available!'); location.href = 'index.php'; </script>";
@@ -20,11 +21,12 @@ if(isset($_POST['notifyByPin'])) {
 if(isset($_POST['notifyByDistrict'])) {
     $district = mysqli_real_escape_string($conn, trim($_POST['district']));
     $vaccine = mysqli_real_escape_string($conn, trim($_POST['vaccine']));
+    $age = mysqli_real_escape_string($conn, trim($_POST['age']));
     $email = mysqli_real_escape_string($conn, trim($_POST['email']));
     $date = mysqli_real_escape_string($conn, trim($_POST['date']));
     $date = date_format(date_create($date),"d-m-Y");
 
-    $sql = "INSERT INTO notifybydistrict (district, email, vaccine, date, mailSent) VALUES ('$district', '$email', '$vaccine', '$date', 0)";
+    $sql = "INSERT INTO notifybydistrict (district, email, vaccine, age, date, mailSent) VALUES ('$district', '$email', '$vaccine', '$age', '$date', 0)";
 
     if(mysqli_query($conn, $sql)) {
         echo "<script type=\"text/javascript\"> alert('You are registered! We will notify you as the vaccine in your distict becomes available!'); location.href = 'index.php'; </script>";
@@ -68,11 +70,17 @@ mysqli_close($conn);
                         <label for="pincode" class="ml-3"><b>Pincode:</b></label>
                         <input id="pincode" type="text" pattern="[0-9]{6}" maxlength="6" class="form-control ml-2" name="pincode" placeholder="Enter your 6 digit pincode" required>
 
-                        <label for="pincode" class="ml-3"><b>Select a Vaccine whose reminder you want:</b></label>
+                        <label for="vaccine" class="ml-3"><b>Select a Vaccine whose reminder you want:</b></label>
                         <select class="form-select" name="vaccine" aria-label="Vaccine" required>
                             <option value="Both">Both</option>
                             <option value="COVISHIELD">Covishield</option>
                             <option value="COVAXIN">Covaxin</option>
+                        </select>
+
+                        <label for="age" class="ml-3"><b>Minimum Age Limit for the slot:</b></label>
+                        <select class="form-select" name="age" aria-label="Vaccine" required>
+                            <option value="45">45 (age 45 and above)</option>
+                            <option value="18">18 (age 18 to 45)</option>
                         </select>
 
                         <label for="email" class="ml-3"><b>Email:</b></label>
@@ -101,11 +109,17 @@ mysqli_close($conn);
                             <option value="">Select your District</option>
                         </select>
 
-                        <label for="pincode" class="ml-3"><b>Select a Vaccine whose reminder you want:</b></label>
+                        <label for="vaccine" class="ml-3"><b>Select a Vaccine whose reminder you want:</b></label>
                         <select class="form-select" name="vaccine" aria-label="Vaccine" required>
                             <option value="Both">Both</option>
                             <option value="COVISHIELD">Covishield</option>
                             <option value="COVAXIN">Covaxin</option>
+                        </select>
+
+                        <label for="age" class="ml-3"><b>Minimum Age Limit for the slot:</b></label>
+                        <select class="form-select" name="age" aria-label="Vaccine" required>
+                            <option value="45">45 (age 45 and above)</option>
+                            <option value="18">18 (age 18 to 45)</option>
                         </select>
 
                         <label for="email" class="ml-3"><b>Email:</b></label>

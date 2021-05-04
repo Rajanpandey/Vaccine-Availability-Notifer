@@ -19,13 +19,14 @@ foreach($notifybypin as $p_id) {
             $center_name = 'Center: '.$center->name.', Block: '.$center->name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
             $body .= '<br/><br/><b>'.$center_name.'</b><br/>';
             foreach($center->sessions as $session) {
-                if (($p_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
+                if ($p_id['age'] >= $session->min_age_limit && ($p_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $vaccineFound += $session->available_capacity;
                     $session_details = $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit;
                     $body .= $session_details.'<br/>';
                 }
             }
         }
+        $body .= '<br/><br/><h2>For some reason if you could not book the slot, you can visit https://vaccinenotifier.azurewebsites.net/ to register yourself again for another avaialbility reminder. :)</h2>';
         if ($vaccineFound) {
             sendMail($p_id['email'], "Vaccine is Available in your pincode", $body);
             mysqli_query($conn, "UPDATE notifybypin SET mailSent=1 WHERE p_id=$id");
@@ -50,7 +51,7 @@ foreach($notifybydistrict as $d_id) {
             $center_name = 'Center: '.$center->name.', Block: '.$center->name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
             $body .= '<br/><br/><b>'.$center_name.'</b><br/>';
             foreach($center->sessions as $session) {
-                if (($d_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
+                if ($d_id['age'] >= $session->min_age_limit && ($d_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $vaccineFound += $session->available_capacity;
                     $session_details = $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit;
                     $body .= $session_details.'<br/>';
