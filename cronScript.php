@@ -17,13 +17,15 @@ foreach($notifybypin as $p_id) {
         $vaccineFound = 0;
         foreach($vaccineData->centers as $center) {
             $center_name = 'Center: '.$center->name.', Block: '.$center->name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
-            $body .= '<br/><br/><b>'.$center_name.'</b><br/>';
+            $sessionCount = 0;
             foreach($center->sessions as $session) {
                 if ($p_id['age'] >= $session->min_age_limit && ($p_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $vaccineFound += $session->available_capacity;
-                    $session_details = $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit;
-                    $body .= $session_details.'<br/>';
+                    $session_details .= $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit.'<br/>';
                 }
+            }
+            if ($sessionCount > 0) {
+                $body .= '<br/><br/><b>'.$center_name.'</b><br/>'.$session_details;
             }
         }
         $body .= '<br/><br/><h2>For some reason if you could not book the slot, you can visit https://vaccinenotifier.azurewebsites.net/ to register yourself again for another avaialbility reminder. :)</h2>';
@@ -49,13 +51,17 @@ foreach($notifybydistrict as $d_id) {
         $vaccineFound = 0;
         foreach($vaccineData->centers as $center) {
             $center_name = 'Center: '.$center->name.', Block: '.$center->name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
-            $body .= '<br/><br/><b>'.$center_name.'</b><br/>';
+            $sessionCount = 0;
+            $session_details = '';
             foreach($center->sessions as $session) {
                 if ($d_id['age'] >= $session->min_age_limit && ($d_id['vaccine'] == 'Both' || strtolower($d_id['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
+                    $sessionCount += 1;
                     $vaccineFound += $session->available_capacity;
-                    $session_details = $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit;
-                    $body .= $session_details.'<br/>';
+                    $session_details .= $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit.'<br/>';
                 }
+            }
+            if ($sessionCount > 0) {
+                $body .= '<br/><br/><b>'.$center_name.'</b><br/>'.$session_details;
             }
         }
         $body .= '<br/><br/><h2>For some reason if you could not book the slot, you can visit https://vaccinenotifier.azurewebsites.net/ to register yourself again for another avaialbility reminder. :)</h2>';
