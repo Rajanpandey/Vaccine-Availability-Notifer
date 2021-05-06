@@ -58,7 +58,7 @@ mysqli_close($conn);
             <div class="col-6">
                 <h5 class="text-center text-danger">Data disclaimer and privacy policy:</h5>
                 <p>1. We do not sell your data in any way whatsoever.</p>
-                <p>2. The webapp is developed in a way to minimize the number of API calls to the government server.</p>
+                <p>2. The webapp is developed in a way to minimize the number of API calls to the government server, and is 100% compliant to the Co-WIN API regulations.</p>
                 <p>3. Open source code can be found <a href="https://github.com/Rajanpandey/Vaccine-Availability-Notifer">here</a>.</p>
             </div>
             <hr/>
