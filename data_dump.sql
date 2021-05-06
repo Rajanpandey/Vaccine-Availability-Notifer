@@ -17,7 +17,7 @@ USE `vaccnotifier`;
 CREATE TABLE `notifybydistrict` (
   `d_id` int(11) NOT NULL,
   `district` int(4) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `vaccine` varchar(20) NOT NULL,
   `age` int(3) NOT NULL,
   `date` varchar(12) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `notifybydistrict` (
 CREATE TABLE `notifybypin` (
   `p_id` int(11) NOT NULL,
   `pincode` int(8) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `vaccine` varchar(20) NOT NULL,
   `age` int(3) NOT NULL,
   `date` varchar(12) NOT NULL,
