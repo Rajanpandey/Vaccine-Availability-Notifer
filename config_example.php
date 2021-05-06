@@ -1,4 +1,4 @@
-<?php return array (
-  'Username' => '', // Your Email
-  'Password' => '', // Your Password
-);
+<?php
+    define ('USERNAME', ''); // Your Email
+    define ('PASSWORD', ''); // Your Password
+?>

@@ -56,7 +56,6 @@ function prepareBodyAndSendMail($vaccineData, $requester, $requestType) {
         }
 
         $body .= '<br/><br/><h3>For some reason if you could not book the slot, you can re-visit https://vaccinenotifier.azurewebsites.net/ to register yourself again for another availability reminder. :)</h3>';
-
         if ($vaccineFound) {
             sendMail($requester['email'], "Vaccine is Available in your pincode", $body);
             if ($requestType == 'pin') {
