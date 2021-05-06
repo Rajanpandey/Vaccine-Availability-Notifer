@@ -1,5 +1,6 @@
 <?php
 include('mailHandler.php');
+include('connect.php');
 
 function getRequests($requestType) {
     include('connect.php');
@@ -10,7 +11,6 @@ function getRequests($requestType) {
         $query = "SELECT * FROM notifybydistrict WHERE mailSent=0";
     }
     $result = mysqli_query($conn, $query);
-    mysqli_close($conn);
 
     $requests = array();
     while($row = mysqli_fetch_assoc($result)) {
@@ -19,7 +19,7 @@ function getRequests($requestType) {
     return $requests;
 }
 
-function apiCall($url) {
+function callAPI($url) {
     // The Co-WIN Public APIs are subject to a rate limit of 100 API calls per 5 minutes per IP.
     // Sleeping 4s before every API call makes sure that only 75 API calls take place every 5 mins.
     sleep(4);
@@ -40,18 +40,18 @@ function prepareBodyAndSendMail($vaccineData, $requester, $requestType) {
         $vaccineFound = 0;
 
         foreach($vaccineData->centers as $center) {
-            $center_name = 'Center: '.$center->name.', Block: '.$center->block_name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
+            $centerName = 'Center: '.$center->name.', Block: '.$center->block_name.', District: '.$center->district_name.' - '.$center->pincode.' From '.$center->from.' to '.$center->to.' ('.$center->fee_type.')';
             $sessionCount = 0;
-            $session_details = '';
+            $sessionDetails = '';
             foreach($center->sessions as $session) {
                 if ($requester['age'] >= $session->min_age_limit && ($requester['vaccine'] == 'Both' || strtolower($requester['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $sessionCount += 1;
                     $vaccineFound += $session->available_capacity;
-                    $session_details .= $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit.'<br/>';
+                    $sessionDetails .= $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit.'<br/>';
                 }
             }
             if ($sessionCount > 0) {
-                $body .= '<br/><br/><b>'.$center_name.'</b><br/>'.$session_details;
+                $body .= '<br/><br/><b>'.$centerName.'</b><br/>'.$sessionDetails;
             }
         }
 
@@ -66,21 +66,23 @@ function prepareBodyAndSendMail($vaccineData, $requester, $requestType) {
                 mysqli_query($conn, "UPDATE notifybydistrict SET mailSent=1 WHERE d_id=$id");
             }
         }
-        mysqli_close($conn);
     }
 }
 
+// Main:
 $notifyByPinRequests = getRequests('pin');
 foreach($notifyByPinRequests as $notifyByPinRequest) {
     $url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode='.$notifyByPinRequest['pincode'].'&date='.$notifyByPinRequest['date'];
-    $vaccineData = apiCall($url);
+    $vaccineData = callAPI($url);
     prepareBodyAndSendMail($vaccineData, $notifyByPinRequest, 'pin');
 }
 
 $notifyByDistrictRequests = getRequests('district');
 foreach($notifyByDistrictRequests as $notifyByDistrictRequest) {
     $url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id='.$notifyByDistrictRequest['district'].'&date='.$notifyByDistrictRequest['date'];
-    $vaccineData = apiCall($url);
+    $vaccineData = callAPI($url);
     prepareBodyAndSendMail($vaccineData, $notifyByDistrictRequest, 'district');
 }
+
+mysqli_close($conn);
 ?>
