@@ -32,10 +32,11 @@
 
         $body .= '<br/><br/><h3>For some reason if you could not book the slot, you can re-visit https://vaccinenotifier.azurewebsites.net/ to register yourself again for another availability reminder. :)</h3>';
         if ($vaccineFound) {
-            sendMail($email, "Vaccine is Available in your pincode", $body);
             if ($requestType == 'pin') {
+                sendMail($email, "Vaccine is Available in your pincode", $body);
                 mysqli_query($conn, "UPDATE notifybypin SET mailSent=1 WHERE p_id=$id");
             } else {
+                sendMail($email, "Vaccine is Available in your district", $body);
                 mysqli_query($conn, "UPDATE notifybydistrict SET mailSent=1 WHERE d_id=$id");
             }
         }
