@@ -1,1 +1,3 @@
-config.php
+/docker/config/*
+/docker/logs/*
+/config.php
