@@ -58,7 +58,7 @@ mysqli_close($conn);
             <div class="col-6">
                 <h5 class="text-center text-danger">Data disclaimer and privacy policy:</h5>
                 <p>1. We do not sell your data in any way whatsoever.</p>
-                <p>2. The webapp is developed in a way to minimize the number of API calls to the government server, and is 100% compliant to the Co-WIN API regulations.</p>
+                <p>2. Due to the new API regulations (rate limit of 100 API calls/5 mins/IP address, and data caching resulting in stale data by 30 mins) introduced by Co-WIN on 5th May (<a href="https://apisetu.gov.in/public/marketplace/api/cowin/cowin-public-v2#/">as written here</a>), real-time notifications service isn't possible. We highly recommend checking the <a href="https://www.cowin.gov.in/">official Co-WIN website</a> from time to time, while having the email notifier as a backup.</p>
                 <p>3. Open source code can be found <a href="https://github.com/Rajanpandey/Vaccine-Availability-Notifer">here</a>.</p>
             </div>
             <hr/>

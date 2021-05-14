@@ -11,7 +11,7 @@
 
     $vaccineData = json_decode($vaccineData);
     if (count($vaccineData->centers) > 0) {
-        $body = 'Hi! <br/>We hope you and your loved ones are safe and well. <br/>Following is the list of centers where vaccines are available at your pincode:<br/>';
+        $body = 'Hi! <br/>We hope you and your loved ones are safe and well. <br/>Following is the list of centers where vaccines are available at your pincode/district:<br/>';
         $vaccineFound = 0;
 
         foreach($vaccineData->centers as $center) {

@@ -30,6 +30,8 @@ include('connect.php');
 
 function getRequests($requestType) {
     include('connect.php');
+    $today = date('d-m-Y');
+
     $query = '';
     if ($requestType == 'pin') {
         $query = "SELECT * FROM notifybypin WHERE mailSent=0";
@@ -40,7 +42,10 @@ function getRequests($requestType) {
 
     $requests = array();
     while($row = mysqli_fetch_assoc($result)) {
-        $requests[] = $row;
+        // Discard requests that are more than 1 week old
+        if (date($row['date']) - $today > -7) {
+            $requests[] = $row;
+        }
     }
     return $requests;
 }
