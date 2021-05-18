@@ -75,7 +75,7 @@ function getRequests($requestType) {
 //             $sessionCount = 0;
 //             $sessionDetails = '';
 //             foreach($center->sessions as $session) {
-//                 if ($requester['age'] >= $session->min_age_limit && ($requester['vaccine'] == 'Both' || strtolower($requester['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
+//                 if ($requester['age'] >= $session->min_age_limit && ($requester['vaccine'] == 'Any' || strtolower($requester['vaccine']) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
 //                     $sessionCount += 1;
 //                     $vaccineFound += $session->available_capacity;
 //                     $sessionDetails .= $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit.'<br/>';

@@ -72,9 +72,10 @@ mysqli_close($conn);
 
                         <label for="vaccine" class="ml-3"><b>Select a Vaccine whose reminder you want:</b></label>
                         <select class="form-select" name="vaccine" aria-label="Vaccine" required>
-                            <option value="Both">Both</option>
+                            <option value="Any">Any</option>
                             <option value="COVISHIELD">Covishield</option>
                             <option value="COVAXIN">Covaxin</option>
+                            <option value="SPUTNIK V">Sputnik V</option>
                         </select>
 
                         <label for="age" class="ml-3"><b>Minimum Age Limit for the slot:</b></label>
@@ -111,9 +112,10 @@ mysqli_close($conn);
 
                         <label for="vaccine" class="ml-3"><b>Select a Vaccine whose reminder you want:</b></label>
                         <select class="form-select" name="vaccine" aria-label="Vaccine" required>
-                            <option value="Both">Both</option>
+                            <option value="Any">Any</option>
                             <option value="COVISHIELD">Covishield</option>
                             <option value="COVAXIN">Covaxin</option>
+                            <option value="SPUTNIK V">Sputnik V</option>
                         </select>
 
                         <label for="age" class="ml-3"><b>Minimum Age Limit for the slot:</b></label>

@@ -19,7 +19,7 @@
             $sessionCount = 0;
             $sessionDetails = '';
             foreach($center->sessions as $session) {
-                if ($age >= $session->min_age_limit && ($vaccineRequirement == 'Both' || strtolower($vaccineRequirement) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
+                if ($age >= $session->min_age_limit && ($vaccineRequirement == 'Any' || strtolower($vaccineRequirement) == strtolower($session->vaccine)) && $session->available_capacity > 0) {
                     $sessionCount += 1;
                     $vaccineFound += $session->available_capacity;
                     $sessionDetails .= $session->available_capacity.' '.$session->vaccine.' vaccines are available on '.$session->date.' for min age '.$session->min_age_limit.'<br/>';
